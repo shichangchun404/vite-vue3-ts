@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router"
 import type { RouteRecordRaw } from "vue-router"
+import { getUserInfo } from "@/api/api.user"
+import { useUserStore } from "@/store"
 
 const routes: RouteRecordRaw[] = [
   {
@@ -13,9 +15,14 @@ const router = createRouter({
   routes,
 })
 
-router.beforeEach((to, from) => {
-  // 路由权限校验 todo
-  console.log("to :>> ", to, from)
+router.beforeEach(async (to, from) => {
+  const data = await getUserInfo()
+  const store = useUserStore()
+  if (data && data.code === 0) {
+    store.isLogin = true
+  } else {
+    store.isLogin = false
+  }
 })
 
 export default router

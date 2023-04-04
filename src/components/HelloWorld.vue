@@ -3,7 +3,12 @@ import { ref } from "vue"
 import { useUserStore } from "@/store"
 
 const store = useUserStore()
-defineProps<{ msg: string }>()
+// 形式1
+// const props = defineProps<{ msg: string }>() // 赋值给props 便于取值
+// 形式2
+const props = defineProps({
+  msg: String,
+})
 
 const changeName = () => {
   store.firstname = "施"
@@ -18,6 +23,7 @@ const changeName3 = () => {
     state.firstname += "X"
   })
 }
+console.log("props.msg >>> ", props.msg)
 </script>
 
 <template>
